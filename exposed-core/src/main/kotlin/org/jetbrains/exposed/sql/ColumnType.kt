@@ -6,6 +6,7 @@ import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.sql.statements.DefaultValueMarker
 import org.jetbrains.exposed.sql.statements.api.ExposedBlob
 import org.jetbrains.exposed.sql.statements.api.PreparedStatementApi
+import org.jetbrains.exposed.sql.vendors.SQLiteDialect
 import org.jetbrains.exposed.sql.vendors.currentDialect
 import java.io.InputStream
 import java.lang.IllegalArgumentException
@@ -16,6 +17,9 @@ import java.nio.ByteBuffer
 import java.sql.Blob
 import java.sql.Clob
 import java.sql.ResultSet
+import java.sql.Types
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -397,6 +401,30 @@ class DoubleColumnType : ColumnType() {
         is String -> value.toDouble()
         else -> error("Unexpected value of type Double: $value of ${value::class.qualifiedName}")
     }
+}
+
+class Int4RangeColumnType : ColumnType() {
+    override fun sqlType(): String = currentDialect.dataTypeProvider.int4range()
+
+    override fun valueFromDB(value: Any): Any = when (value) {
+        is Int -> value
+        else -> {
+            val range = value.toString().substring(1, value.toString().length -1).split(",")
+            IntRange(range[0].toInt(), range[1].toInt()-1)
+        }
+    }
+
+    override fun valueToDB(value: Any?): Any? {
+        var range = value as IntRange
+        return "[${range.first},${range.last}]"
+    }
+
+    override fun setParameter(stmt: PreparedStatementApi, index: Int, value: Any?) {
+        if(value != null){
+            stmt.setRange(index, value)
+        }
+    }
+
 }
 
 /**

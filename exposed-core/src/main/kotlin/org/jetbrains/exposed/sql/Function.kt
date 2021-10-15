@@ -191,6 +191,20 @@ class Count(
     }
 }
 
+class Upper (
+    val expr: Expression<IntRange>,
+    _columnType: IColumnType
+) : Function<IntRange>(_columnType) {
+    override fun toQueryBuilder(queryBuilder: QueryBuilder): Unit = queryBuilder { append("UPPER(", expr, ")") }
+}
+
+class Lower (
+    val expr: Expression<IntRange>,
+    _columnType: IColumnType
+) : Function<IntRange>(_columnType) {
+    override fun toQueryBuilder(queryBuilder: QueryBuilder): Unit = queryBuilder { append("LOWER(", expr, ")") }
+}
+
 // Aggregate Functions for Statistics
 
 /**

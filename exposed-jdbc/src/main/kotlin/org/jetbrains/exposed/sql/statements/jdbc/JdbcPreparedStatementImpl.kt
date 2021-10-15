@@ -29,6 +29,10 @@ class JdbcPreparedStatementImpl(val statement: PreparedStatement, val wasGenerat
         statement.setObject(index, value)
     }
 
+    override fun setRange(index: Int, value: Any) {
+        statement.setObject(index, value, Types.OTHER)
+    }
+
     override fun setNull(index: Int, columnType: IColumnType) {
         if (columnType is BinaryColumnType || columnType is BlobColumnType)
             statement.setNull(index, Types.LONGVARBINARY)

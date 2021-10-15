@@ -562,6 +562,9 @@ open class Table(name: String = "") : ColumnSet(), DdlAware {
      */
     fun decimal(name: String, precision: Int, scale: Int): Column<BigDecimal> = registerColumn(name, DecimalColumnType(precision, scale))
 
+    /** Creates a numeric column, with the specified [name]. */
+    fun int4range(name: String): Column<IntRange> = registerColumn(name, Int4RangeColumnType())
+
     // Character columns
 
     /** Creates a character column, with the specified [name], for storing single characters. */

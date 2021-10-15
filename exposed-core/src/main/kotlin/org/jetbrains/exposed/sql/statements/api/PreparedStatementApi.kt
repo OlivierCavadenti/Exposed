@@ -26,6 +26,8 @@ interface PreparedStatementApi {
 
     operator fun set(index: Int, value: Any)
 
+    fun setRange(index: Int, value: Any)
+
     fun setNull(index: Int, columnType: IColumnType)
 
     fun setInputStream(index: Int, inputStream: InputStream)

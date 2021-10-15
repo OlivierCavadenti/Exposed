@@ -184,6 +184,10 @@ class GreaterOp(expr1: Expression<*>, expr2: Expression<*>) : ComparisonOp(expr1
  */
 class GreaterEqOp(expr1: Expression<*>, expr2: Expression<*>) : ComparisonOp(expr1, expr2, ">=")
 
+class IncludeEqOp(expr1: Expression<*>, expr2: Expression<*>) : ComparisonOp(expr1, expr2, "@>")
+
+class OverlapsEqOp(expr1: Expression<*>, expr2: Expression<*>) : ComparisonOp(expr1, expr2, "&&")
+
 /**
  * Represents an SQL operator that checks if the specified [expr] is between the values [from] and [to].
  */

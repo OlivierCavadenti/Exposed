@@ -8,6 +8,11 @@ private val Transaction.isMySQLMode: Boolean
     get() = (db.dialect as? H2Dialect)?.isMySQLMode() ?: false
 
 internal object H2DataTypeProvider : DataTypeProvider() {
+    override fun int4range(): String {
+        exposedLogger.error("H2 doesn't support range type.")
+        error("H2 doesn't support range type.")
+    }
+
     override fun binaryType(): String {
         exposedLogger.error("The length of the Binary column is missing.")
         error("The length of the Binary column is missing.")

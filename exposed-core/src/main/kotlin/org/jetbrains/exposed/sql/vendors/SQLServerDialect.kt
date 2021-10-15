@@ -12,7 +12,10 @@ internal object SQLServerDataTypeProvider : DataTypeProvider() {
         exposedLogger.error("The length of the Binary column is missing.")
         error("The length of the Binary column is missing.")
     }
-
+    override fun int4range(): String {
+        exposedLogger.error("MYSQL doesn't support range type.")
+        error("MYSQL doesn't support range type.")
+    }
     override fun blobType(): String = "VARBINARY(MAX)"
     override fun uuidType(): String = "uniqueidentifier"
     override fun uuidToDB(value: UUID): Any = value.toString()

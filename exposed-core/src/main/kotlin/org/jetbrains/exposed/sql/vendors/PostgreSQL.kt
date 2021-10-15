@@ -8,6 +8,7 @@ import java.util.*
 internal object PostgreSQLDataTypeProvider : DataTypeProvider() {
     override fun byteType(): String = "SMALLINT"
     override fun floatType(): String = "REAL"
+    override fun int4range(): String = "INT4RANGE"
     override fun integerAutoincType(): String = "SERIAL"
     override fun longAutoincType(): String = "BIGSERIAL"
     override fun uuidType(): String = "uuid"

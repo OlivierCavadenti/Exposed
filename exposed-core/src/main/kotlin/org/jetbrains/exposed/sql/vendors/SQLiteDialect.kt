@@ -17,7 +17,10 @@ internal object SQLiteDataTypeProvider : DataTypeProvider() {
         exposedLogger.error("The length of the Binary column is missing.")
         error("The length of the Binary column is missing.")
     }
-
+    override fun int4range(): String {
+        exposedLogger.error("MYSQL doesn't support range type.")
+        error("MYSQL doesn't support range type.")
+    }
     override fun dateTimeType(): String = "TEXT"
     override fun booleanToStatementString(bool: Boolean) = if (bool) "1" else "0"
 }

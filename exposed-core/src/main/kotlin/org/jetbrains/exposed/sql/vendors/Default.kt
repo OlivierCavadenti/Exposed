@@ -51,6 +51,10 @@ abstract class DataTypeProvider {
     /** Numeric type for storing 8-byte (double precision) floating-point numbers. */
     open fun doubleType(): String = "DOUBLE PRECISION"
 
+    // Range types
+
+    abstract fun int4range() : String
+
     // Character types
 
     /** Character type for storing strings of variable and _unlimited_ length. */

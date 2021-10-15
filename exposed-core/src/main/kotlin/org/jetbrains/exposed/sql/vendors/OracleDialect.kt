@@ -13,6 +13,10 @@ internal object OracleDataTypeProvider : DataTypeProvider() {
     override fun longType(): String = "NUMBER(19)"
     override fun longAutoincType(): String = "NUMBER(19)"
     override fun ulongType(): String = "NUMBER(20)"
+    override fun int4range(): String {
+        exposedLogger.error("MYSQL doesn't support range type.")
+        error("MYSQL doesn't support range type.")
+    }
     override fun textType(): String = "CLOB"
     override fun timeType(): String = dateTimeType()
     override fun binaryType(): String {

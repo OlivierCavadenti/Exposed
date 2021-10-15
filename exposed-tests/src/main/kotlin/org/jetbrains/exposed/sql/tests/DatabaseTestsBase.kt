@@ -47,12 +47,11 @@ enum class TestDB(
         afterTestFinished = { if (runTestContainersMySQL()) mySQLProcess.close() }
     ),
     POSTGRESQL(
-        { "jdbc:postgresql://localhost:12346/template1?user=postgres&password=&lc_messages=en_US.UTF-8" }, "org.postgresql.Driver",
-        beforeConnection = { postgresSQLProcess }, afterTestFinished = { postgresSQLProcess.close() }
+        { "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=caca&lc_messages=en_US.UTF-8" }, "org.postgresql.Driver"
     ),
     POSTGRESQLNG(
         { "jdbc:pgsql://localhost:12346/template1?user=postgres&password=" }, "com.impossibl.postgres.jdbc.PGDriver",
-        user = "postgres", beforeConnection = { postgresSQLProcess }, afterTestFinished = { postgresSQLProcess.close() }
+        user = "postgres", beforeConnection = {  }, afterTestFinished = { postgresSQLProcess.close() }
     ),
     ORACLE(
         driver = "oracle.jdbc.OracleDriver", user = "ExposedTest", pass = "12345",

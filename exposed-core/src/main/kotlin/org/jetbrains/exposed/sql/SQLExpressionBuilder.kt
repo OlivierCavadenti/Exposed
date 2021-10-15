@@ -57,6 +57,11 @@ fun ExpressionWithColumnType<*>.count(): Count = Count(this)
 /** Returns the number of distinct input rows for which the value of this expression is not null. */
 fun Column<*>.countDistinct(): Count = Count(this, true)
 
+fun ExpressionWithColumnType<IntRange>.upper(): Upper  = Upper(this, this.columnType)
+
+fun ExpressionWithColumnType<IntRange>.lower(): Lower  = Lower(this, this.columnType)
+
+
 // Aggregate Functions for Statistics
 
 /**
@@ -216,16 +221,19 @@ interface ISqlExpressionBuilder {
     @JvmName("greaterEqEntityID")
     infix fun <T : Comparable<T>> ExpressionWithColumnType<EntityID<T>>.greaterEq(t: T): GreaterEqOp = GreaterEqOp(this, wrap(t))
 
-    // Comparison Predicates
+    infix fun <T : IntRange> ExpressionWithColumnType<T>.include(t: Int): Op<Boolean> = IncludeEqOp(this, wrap(t))
 
-    /** Returns `true` if this expression is between the values [from] and [to], `false` otherwise. */
-    fun <T, S : T?> ExpressionWithColumnType<S>.between(from: T, to: T): Between = Between(this, wrap(from), wrap(to))
+    infix fun <T : IntRange> ExpressionWithColumnType<T>.overlaps(t: T): Op<Boolean> = OverlapsEqOp(this, wrap(t))
+
+    // Comparison Predicates
 
     /** Returns `true` if this expression is null, `false` otherwise. */
     fun <T> Expression<T>.isNull(): IsNullOp = IsNullOp(this)
 
     /** Returns `true` if this expression is not null, `false` otherwise. */
     fun <T> Expression<T>.isNotNull(): IsNotNullOp = IsNotNullOp(this)
+
+    fun <T, S : T?> ExpressionWithColumnType<S>.between(from: T, to: T): Between = Between(this, wrap(from), wrap(to))
 
     // Mathematical Operators
 

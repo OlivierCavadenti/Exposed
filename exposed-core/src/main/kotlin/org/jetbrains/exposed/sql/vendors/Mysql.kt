@@ -22,6 +22,11 @@ internal object MysqlDataTypeProvider : DataTypeProvider() {
 
     override fun ulongType(): String = "BIGINT UNSIGNED"
 
+    override fun int4range(): String {
+        exposedLogger.error("MYSQL doesn't support range type.")
+        error("MYSQL doesn't support range type.")
+    }
+
     override fun textType(): String = "longtext"
 
     override fun precessOrderByClause(queryBuilder: QueryBuilder, expression: Expression<*>, sortOrder: SortOrder) {
